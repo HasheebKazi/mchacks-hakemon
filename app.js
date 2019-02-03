@@ -60,10 +60,14 @@ app.post('/msg', (req, res, next) => {
 });
 
 app.get('/admin/del', (req, res) => {
-    utils.delData("./data/player_1.json");
-    utils.delData("./data/player_2.json");
-    utils.delData("./data/moves.json");
-    res.redirect('/');
+    // utils.delData("./data/player_1.json");
+    // utils.delData("./data/player_2.json");
+    // utils.delData("./data/moves.json");
+    fs.writeFileSync('./data/player_1.json', JSON.stringify({ "player_1": "nan", "order": "nan"}));
+    fs.writeFileSync('./data/player_2.json', JSON.stringify({ "player_2": "nan", "order": "nan"}));
+    fs.writeFileSync('./data/moves.json', JSON.stringify({ "number": "nan", "input": "nan", "auth": "nan"}));
+
+    res.send('<html><body><h1>OK</h1></body></html>');
 });
 
 app.get('/data/p1', (req, res, next) => {
@@ -74,6 +78,7 @@ app.get('/data/p1', (req, res, next) => {
             console.log('error');
         }
     }));
+    res.setHeader('Access-Control-Allow-Origin', '*');
     res.send(json);
 });
 
@@ -83,6 +88,7 @@ app.get('/data/p2', (req, res, next) => {
             console.log('error');
         }
     }));
+    res.setHeader('Access-Control-Allow-Origin', '*');
     res.send(json);
 });
 
@@ -92,6 +98,7 @@ app.get('/data/m', (req, res, next) => {
             console.log('error');
         }
     }));
+    res.setHeader('Access-Control-Allow-Origin', '*');
     res.send(json);
 });
 
