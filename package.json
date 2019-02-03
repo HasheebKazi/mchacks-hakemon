@@ -1,0 +1,33 @@
+{
+  "name": "hackermon",
+  "version": "0.0.1",
+  "description": "Pokemon but mchacks",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js",
+    "start-server": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/jackbiggin/Hackermon.git"
+  },
+  "keywords": [
+    "pokemon"
+  ],
+  "author": "Jack Bigging and Hasheeb Kazi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jackbiggin/Hackermon/issues"
+  },
+  "homepage": "https://github.com/jackbiggin/Hackermon#readme",
+  "devDependencies": {
+    "nodemon": "^1.18.9"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "twilio": "^3.27.1"
+  }
+}
