@@ -18,7 +18,7 @@ app.set('views', 'views');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// const inputs = [];
+const inputs = [];
 
 // routes
 app.post('/msg', (req, res, next) => {
@@ -35,16 +35,23 @@ app.post('/msg', (req, res, next) => {
 
     if ( msgBody === '1') {
         // inputs.push({ "player_1": msgFrom});
+        inputs.push({ "player": msgFrom, "order": "1"});
         fs.writeFileSync('./data/player_1.json', JSON.stringify({ "player": msgFrom, "order": "1"}));
+        // fs.writeFileSync('./public/player_1.json', JSON.stringify({ "player": msgFrom, "order": "1"}));
 
         // console.log(inputs);
     } else if ( msgBody === '2') {
+        inputs.push({ "player": msgFrom, "order": "2"});
         fs.writeFileSync('./data/player_2.json', JSON.stringify({ "player_2": msgFrom, "order": "2"}));
+        // fs.writeFileSync('./public/player_2.json', JSON.stringify({ "player_2": msgFrom, "order": "2"}));        
         // inputs.push({ "player_2": msgFrom});
         // console.log(inputs);
     } else if ( msgBody === 'a' || msgBody === 'b' || msgBody === 'c' || msgBody === 'A' || msgBody === 'B' || msgBody === 'C') {
         const num = utils.randNum();
+        inputs.push({ "number": msgFrom, "input": msgBody.toLowerCase(), "auth": num});
+
         fs.writeFileSync('./data/moves.json', JSON.stringify({ "number": msgFrom, "input": msgBody.toLowerCase(), "auth": num}));
+        // fs.writeFileSync('./public/moves.json', JSON.stringify({ "player_2": msgFrom, "order": "2"}));    
     } else {
         // console.log('Error invalid input.');
         // console.log(msgBody);
@@ -59,8 +66,37 @@ app.get('/admin/del', (req, res) => {
     res.redirect('/');
 });
 
+app.get('/data/p1', (req, res, next) => {
+    // console.log(req);
+    // res.send(JSON.stringify("./data/player_1.json"));
+    var json = JSON.parse(fs.readFileSync('./data/player_1.json', 'utf8', (data, error) => {
+        if (error) {
+            console.log('error');
+        }
+    }));
+    res.send(json);
+});
+
+app.get('/data/p2', (req, res, next) => {
+    var json = JSON.parse(fs.readFileSync('./data/player_2.json', 'utf8', (data, error) => {
+        if (error) {
+            console.log('error');
+        }
+    }));
+    res.send(json);
+});
+
+app.get('/data/m', (req, res, next) => {
+    var json = JSON.parse(fs.readFileSync('./data/moves.json', 'utf8', (data, error) => {
+        if (error) {
+            console.log('error');
+        }
+    }));
+    res.send(json);
+});
+
 app.use('/', (req, res, next) => {
-    console.log(req);
+    // console.log(req);
 });
 // app.use(shopRoutes);
 
